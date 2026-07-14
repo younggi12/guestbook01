@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react'
 import styles from "./Home.module.scss";
 
 const videos = [
-  { eyebrow : "SPEED . POWER . GLORY", title : "BORN TO RACE", label : "달리기 위해 태어난 순간", src : '/mp4/F1.mp4'},
-  { eyebrow : "NO LIMITS", title : "PUSH THE LIMITS", label : "한계를 넘어서는 순간", src : '/mp4/F2.mp4'},
-  { eyebrow : "FEEL IT", title : "FEEL THE SPEED", label : "느껴보세요, 진짜 레이스의 전율", src : '/mp4/F3.mp4'},
+  { eyebrow : "SPEED . POWER . GLORY", title : "BORN TO RACE", label : "달리기 위해 태어난 순간", src : '/mp4/F8.mp4'},
+  { eyebrow : "NO LIMITS", title : "PUSH THE LIMITS", label : "한계를 넘어서는 순간", src : '/mp4/F6.mp4'},
+  { eyebrow : "FEEL IT", title : "FEEL THE SPEED", label : "느껴보세요, 진짜 레이스의 전율", src : '/mp4/F10.mp4'},
 ]
 
 const Home = () => {
@@ -26,7 +26,7 @@ const Home = () => {
               // 마지막 영상이 아니면 다음 영상으로 이동 
               return idx + 1
           })
-        }, 5000);
+        }, 6000);
 
         return () => {
             clearInterval(timer)
