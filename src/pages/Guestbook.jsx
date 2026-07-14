@@ -159,7 +159,7 @@ const Guestbook = () => {
 
         {/* 방명록 목록 */}
         <div className={styles.listHeader}>
-          <h2>여러분들의 응원기록</h2>
+          <h2>응원기록</h2>
           <p className={styles.count}>{post.length}개의 응원</p>
         </div>
         {

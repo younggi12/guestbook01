@@ -3,7 +3,7 @@ import CharacterAvatar from './CharacterAvatar'
 import CHARACTERS from './characterData'
 import styles from './GuestbookForm.module.scss'
 
-const EMOJIS = ['😀', '😊', '🥰', '😂', '😮', '😢', '😭', '😴', '🤔', '😎', '🥳','🏍️','🏎️']
+const EMOJIS = ['😀', '😊', '🥰', '😂', '😮', '😢', '😭', '😴', '🤔', '😎', '🥳',]
 
 // 처음 진입시 기본으로 선택되어있을 선수 (배열의 첫번째 선수)
 const DEFAULT_CHARACTER = CHARACTERS[0]?.id || ''
@@ -61,7 +61,7 @@ const GuestbookForm = ( {onAddPost, defaultNickname = ''} ) => {
                 메세지
                 <textarea type="text" value={message} onChange={ (e) => {
                 setMessage(e.target.value)
-                }} placeholder='당신의 이야기를 들려주세요' maxLength="500" required />
+                }} placeholder='아무거나' maxLength="500" required />
             </label>
             {/* 캐릭터 미리보기 */}
             {
