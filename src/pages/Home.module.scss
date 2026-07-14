@@ -1,0 +1,188 @@
+$f1-red: #e10600;
+
+.home{
+    width: 100%;
+    height: 100vh;
+    background-color: #111;
+    position: relative;
+    font-family: 'Titillium Web', 'Pretendard', sans-serif;
+
+    .slide{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin-top: 70px;
+        overflow: hidden;
+
+        video{
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        // 왼쪽 텍스트 영역 가독성을 위한 어두운 그라디언트 오버레이 (좀 더 시네마틱하게)
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.05) 65%),
+                linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 30%);
+            pointer-events: none;
+        }
+    }
+
+    .copy{
+        position: absolute;
+        top: 15%;
+        transform: translateY(-50%);
+        left: 10%;
+        z-index: 10;
+        display: flex;
+        align-items: stretch;
+        gap: 22px;
+        max-width: 60%;
+        animation: copyFadeIn 0.8s ease both;
+    }
+
+    // 방명록 카드 스타일과 통일감을 주는 빨간 세로 악센트 바
+    .accentBar{
+        width: 4px;
+        background: $f1-red;
+        flex-shrink: 0;
+    }
+
+    .copyText{
+        .eyebrow{
+            color: $f1-red;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-size: 14px;
+            margin: 0 0 10px;
+        }
+
+        h1{
+            font-size: 72px;
+            font-weight: 900;
+            font-style: italic;
+            letter-spacing: 1px;
+            color: white;
+            line-height: 1;
+            margin: 0 0 14px;
+            text-shadow: 3px 3px 0 $f1-red;
+        }
+
+        h2{
+            font-size: 22px;
+            font-weight: 500;
+            color: #d8d8dc;
+            line-height: 1.4;
+            margin: 0;
+            text-shadow: 1px 1px 8px rgba(0,0,0,0.6);
+        }
+    }
+
+    // 하단 스크롤 유도 문구
+    .scrollHint{
+        position: absolute;
+        bottom: 50px;
+        right: 6%;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+
+        span{
+            color: rgba(255,255,255,0.6);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+    }
+
+    .scrollLine{
+        width: 1px;
+        height: 40px;
+        background: rgba(255,255,255,0.25);
+        position: relative;
+        overflow: hidden;
+
+        &::after{
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: $f1-red;
+            animation: scrollMove 1.8s ease-in-out infinite;
+        }
+    }
+
+    .dots{
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;   
+        display: flex;
+        gap: 15px;
+
+        button{
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+
+            &:hover{
+                background-color: $f1-red;
+            }
+
+            &.activeDot{
+                width: 25px;
+                border-radius: 10px;
+                background-color: $f1-red;
+                border: none;
+            }
+        }
+    }
+}
+
+@keyframes copyFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-16px, -50%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0, -50%);
+    }
+}
+
+@keyframes scrollMove {
+    0% { top: -100%; }
+    60% { top: 100%; }
+    100% { top: 100%; }
+}
+
+// 모바일 대응
+@media (max-width: 768px) {
+    .home .copy {
+        max-width: 85%;
+    }
+    .home .copyText h1 {
+        font-size: 42px;
+    }
+    .home .copyText h2 {
+        font-size: 16px;
+    }
+    .home .scrollHint {
+        display: none;
+    }
+}

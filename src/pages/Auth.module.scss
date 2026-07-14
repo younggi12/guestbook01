@@ -1,0 +1,134 @@
+.auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: #f3f3f3;
+}
+
+.card {
+  width: 100%;
+  max-width: 460px;
+  padding: 48px 40px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative; 
+
+  h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    color: #111;
+  }
+
+  button[type='submit'] {
+    margin-top: 8px;
+    padding: 16px;
+    border: none;
+    border-radius: 4px;
+    background: #ebebeb;
+    color: #9a9a9a;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      background: #111;
+      color: #fff;
+    }
+  }
+
+   p:last-of-type {
+    margin: 20px 0 0;
+    padding-top: 20px;
+    border-top: 1px solid #ececec;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+
+    a {
+      color: #111;
+      font-weight: 700;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 4px;
+
+  h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    color: #111;
+  }
+}
+
+.logo {
+  height: 32px;
+  width: auto;
+  margin-bottom: 16px;
+  object-fit: contain;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #888;
+
+  input {
+    padding: 14px 16px 14px 40px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 400;
+    color: #222;
+    background-repeat: no-repeat;
+    background-position: 14px center;
+    background-size: 16px 16px;
+    transition: border-color 0.15s ease;
+
+    &::placeholder {
+      color: #bbb;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #111;
+    }
+
+    // 닉네임 (person 아이콘)
+    &[type='text'] {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'><circle cx='12' cy='8' r='4'/><path d='M4 21c0-4 4-6 8-6s8 2 8 6'/></svg>");
+    }
+
+    // 이메일
+    &[type='email'] {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'><rect x='2' y='4' width='20' height='16' rx='2'/><path d='M2 6l10 7 10-7'/></svg>");
+    }
+
+    // 패스워드
+    &[type='password'] {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'><rect x='5' y='11' width='14' height='9' rx='2'/><path d='M8 11V7a4 4 0 0 1 8 0v4'/></svg>");
+    }
+  }
+}

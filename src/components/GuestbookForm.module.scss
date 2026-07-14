@@ -1,0 +1,213 @@
+$f1-red: #e10600;
+$carbon: #15151e;
+$carbon-light: #1f1f2b;
+$silver: #949498;
+$white: #f8f8f8;
+
+.wrap {
+  margin-bottom: 10px;
+}
+
+.form {
+  background: $carbon-light;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 32px 28px;
+}
+
+.heading {
+  color: $white;
+  font-size: 20px;
+  font-weight: 800;
+  font-style: italic;
+  margin: 0 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid $f1-red;
+}
+
+.emojiLabel {
+  color: $silver;
+  font-size: 12px;
+  margin: 0 0 8px;
+}
+
+.emojiRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.emojiBtn {
+  background: $carbon;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    border-color: $f1-red;
+    transform: translateY(-2px);
+  }
+}
+
+.field {
+  display: block;
+  color: $silver;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 14px;
+
+  input,
+  textarea {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    background: $carbon;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    padding: 10px 12px;
+    color: $white;
+    font-size: 14px;
+    font-family: inherit;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: $f1-red;
+    }
+
+    &::placeholder {
+      color: #6a6a70;
+    }
+  }
+
+  textarea {
+    min-height: 90px;
+    resize: vertical;
+  }
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.previewLabel {
+  color: $silver;
+  font-size: 12px;
+  margin: 0;
+}
+
+.previewAvatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid $f1-red;
+  animation: previewPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes previewPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(225, 6, 0, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(225, 6, 0, 0);
+  }
+}
+
+.characterBox {
+  color: $silver;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.characterBoxHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+
+  strong {
+    color: $white;
+    font-size: 14px;
+  }
+}
+
+.characterHint {
+  color: $silver;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.characterGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.characterBtn {
+  position: relative;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  background: $carbon;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// 선택된 선수 사진 위에 표시되는 체크마크
+.checkMark {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  background: $f1-red;
+  color: $white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.selected {
+  border-color: $f1-red;
+  box-shadow: 0 0 0 2px rgba(225,6,0,0.35);
+}
+
+.submitBtn {
+  width: 100%;
+  background: $f1-red;
+  color: $white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: #c00500;
+  }
+}

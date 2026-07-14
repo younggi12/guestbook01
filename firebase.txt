@@ -1,0 +1,178 @@
+=====================================================================
+ 방명록(guestbook01) - Firebase / Zustand 연동 변경 기록
+ 작성일 : 2026-07-14
+=====================================================================
+
+[1] 목적
+------------------------------------------------------------
+기존 vanilla state(useState) 기반 로그인 폼 / 방명록 UI를 그대로 유지한 채,
+Firebase Authentication(이메일/패스워드) + Firestore(방명록 데이터) +
+Zustand(로그인 전역상태관리) 를 연동함.
+
+
+[2] 신규 생성 파일
+------------------------------------------------------------
+1) vite-project/.env
+   - 기존에는 프로젝트 최상위(guestbook01/.env)에 있었고,
+     각 줄 끝에 콤마(,)가 붙어있는 잘못된 형식이라 vite가 값을 제대로
+     읽지 못하는 상태였음.
+   - vite는 프로젝트 루트(vite-project/)의 .env만 인식하므로 위치를 옮기고
+     형식을 올바르게 수정함 (콤마 제거, 따옴표 제거).
+   - .gitignore에 .env 추가함 (API 키가 깃허브에 올라가지 않도록 방지).
+
+2) vite-project/src/firebase.js
+   - firebase 앱 초기화 파일.
+   - .env 값을 읽어 firebaseConfig 구성.
+   - auth(인증), db(firestore) 를 export 하여 다른 파일에서 재사용.
+
+3) vite-project/src/store/useAuthStore.js
+   - zustand 로그인 상태관리 스토어.
+   - user(로그인 유저 정보), isLoading(최초 인증확인 여부),
+     setUser(), clearUser() 제공.
+
+4) vite-project/firestore.rules
+   - Firestore 보안규칙 전체 작성 (아래 [5]항목 참고).
+
+5) guestbook01/firebase.txt
+   - 이 문서.
+
+
+[3] 수정한 기존 파일
+------------------------------------------------------------
+1) src/App.jsx
+   - useEffect + onAuthStateChanged(auth, ...) 로 firebase 로그인 상태를
+     구독, zustand(setUser/clearUser)에 실시간 반영.
+   - 기존 라우팅 구조(Home/Login/Signup/Guestbook, Header) 그대로 유지.
+
+2) src/pages/Login.jsx
+   - signInWithEmailAndPassword(auth, email, password) 연동.
+   - 로그인 성공시 /guest 로 이동.
+     * 버그 수정 : 기존 코드는 navigate('/guestbook') 로 되어있었으나
+       실제 라우트 경로는 '/guest' 라서 페이지가 못찾는(404->홈이동) 상태였음.
+       '/guest' 로 수정.
+   - 에러 발생시(비밀번호 틀림/계정없음/이메일형식오류 등) 한글 에러메세지 표시.
+   - UI(입력창, 버튼, 문구 등)는 그대로 유지, 에러메세지 영역만 추가.
+
+3) src/pages/Signup.jsx
+   - createUserWithEmailAndPassword(auth, email, password) 로 계정생성.
+   - updateProfile(user, { displayName: 닉네임 }) 으로 닉네임 저장.
+   - 가입 성공시 /guest 로 이동 (동일하게 기존 '/guestbook' 오타 수정).
+   - 이메일 중복, 약한 비밀번호 등 에러시 한글 메세지 표시.
+
+4) src/components/Header.jsx
+   - zustand의 user 상태를 구독.
+   - 로그인 상태 : 닉네임(또는 이메일) + 로그아웃 버튼 표시.
+   - 비로그인 상태 : 기존과 동일하게 로그인/회원가입 링크 표시.
+   - 로그아웃 버튼 클릭시 signOut(auth) 호출 후 홈으로 이동.
+   - Header.module.scss 에 닉네임/로그아웃 버튼 스타일 추가.
+
+5) src/pages/Guestbook.jsx  (핵심 변경)
+   - 기존 useState(INITIAL_POSTS) 더미데이터를 제거하고 Firestore 연동.
+   - onSnapshot 으로 'guestbook' 컬렉션을 createdAt 내림차순 실시간 구독
+     (글 작성/수정/삭제시 새로고침 없이 자동 반영).
+   - 글 작성(addPostFnc) : addDoc 으로 저장. 저장시 authorUid(작성자 uid)를
+     함께 저장하여 "본인 글" 여부를 판단하는 기준으로 사용.
+   - 글 삭제(deleFun) : item.authorUid 가 로그인한 유저 uid와 같을 때만 삭제
+     가능. 다르면 alert로 안내 후 차단.
+   - 글 수정(editSaveFnc) : 신규 기능. "수정" 버튼 클릭시 해당 카드가
+     인라인 편집모드로 바뀌고(textarea), 저장시 updateDoc으로 message /
+     updatedAt 갱신. 본인 글이 아니면 수정 버튼 자체가 보이지 않음.
+   - 비회원(로그인 안한 사용자) : 목록 조회(읽기)는 그대로 가능하지만
+     글쓰기 폼 대신 "로그인 후 작성 가능" 안내문구를 표시하여 읽기전용으로 동작.
+   - 캐릭터(CharacterAvatar), 이모티콘(GuestbookForm 내부) 기능은 코드 변경 없이
+     그대로 유지됨.
+   - Guestbook.module.scss 에 수정모드/버튼그룹/비회원안내 스타일 추가.
+
+6) src/components/GuestbookForm.jsx
+   - defaultNickname prop 추가 : 로그인한 유저의 displayName(닉네임)을
+     닉네임 입력창의 기본값으로 자동 채워줌 (직접 수정도 가능, 기존 UI 유지).
+   - 글 작성 후 입력창 초기화시 닉네임은 로그인 닉네임으로 되돌리도록 수정.
+   - 이모티콘 목록, 캐릭터 선택 UI/로직은 전혀 변경하지 않음.
+
+7) src/pages/Auth.module.scss
+   - 로그인/회원가입 실패시 보여줄 에러메세지(.errorMsg) 스타일 추가.
+
+
+[4] Firestore 데이터 구조
+------------------------------------------------------------
+컬렉션 : guestbook
+문서 필드 :
+  nickname    (string)  - 작성자가 입력한 닉네임
+  message     (string)  - 방명록 내용 (이모티콘 포함 가능)
+  character   (string)  - 선택한 캐릭터 id (characterData.js 참고, 선택안하면 "")
+  authorUid   (string)  - 작성자의 firebase auth uid (본인 확인용)
+  createdAt   (Timestamp) - 작성일 (serverTimestamp)
+  updatedAt   (Timestamp | null) - 수정일 (수정한 적 없으면 null)
+
+
+[5] Firestore 보안규칙 (firestore.rules 파일 전체 내용)
+------------------------------------------------------------
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /guestbook/{postId} {
+
+      // 읽기 : 누구나 가능 (비회원 포함)
+      allow read: if true;
+
+      // 작성 : 로그인 필수 + 본인 uid로만 작성 가능 + 필드 유효성 검사
+      allow create: if request.auth != null
+                    && request.resource.data.authorUid == request.auth.uid
+                    && request.resource.data.nickname is string
+                    && request.resource.data.nickname.size() > 0
+                    && request.resource.data.nickname.size() <= 20
+                    && request.resource.data.message is string
+                    && request.resource.data.message.size() > 0
+                    && request.resource.data.message.size() <= 500;
+
+      // 수정 : 로그인 + 기존 작성자 본인만, 작성자/닉네임/작성일은 변경 불가
+      allow update: if request.auth != null
+                    && resource.data.authorUid == request.auth.uid
+                    && request.resource.data.authorUid == resource.data.authorUid
+                    && request.resource.data.nickname == resource.data.nickname
+                    && request.resource.data.createdAt == resource.data.createdAt
+                    && request.resource.data.message is string
+                    && request.resource.data.message.size() > 0
+                    && request.resource.data.message.size() <= 500;
+
+      // 삭제 : 로그인 + 기존 작성자 본인만
+      allow delete: if request.auth != null
+                    && resource.data.authorUid == request.auth.uid;
+    }
+
+    // 그 외 모든 경로는 차단
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+적용 방법 (둘 중 하나) :
+  A. firebase 콘솔 > Firestore Database > 규칙 탭에 위 내용 붙여넣기 후 게시
+  B. firebase CLI 사용시 :
+     1) vite-project 폴더에서 firebase init (Firestore 선택)
+     2) 생성된 firestore.rules 를 이 파일 내용으로 교체
+     3) firebase deploy --only firestore:rules
+
+
+[6] Firebase 콘솔에서 추가로 확인해야 할 설정
+------------------------------------------------------------
+1) Authentication > Sign-in method 에서 "이메일/비밀번호" 제공업체가
+   사용 설정(Enable) 되어있는지 확인 (기본값은 꺼져있음).
+2) Firestore Database 가 아직 생성 안되어 있다면 콘솔에서 생성
+   (테스트모드로 만든 뒤, 위 [5]의 보안규칙으로 교체 권장).
+3) authDomain(guestbook01-6f93e.firebaseapp.com) 관련 도메인이
+   Authentication > 설정 > 승인된 도메인에 등록되어 있는지 확인
+   (localhost는 기본 포함, Vercel 배포 도메인은 직접 추가 필요).
+
+
+[7] 실행/테스트 방법
+------------------------------------------------------------
+1) vite-project 폴더에서 npm install (firebase, zustand 는 이미 package.json에 있음)
+2) npm run dev
+3) /signup 에서 회원가입 -> 자동 로그인 -> /guest 로 이동 확인
+4) 방명록 작성/수정(본인글)/삭제(본인글) 동작 확인
+5) 로그아웃 후 비회원 상태에서 목록은 보이되 작성폼 대신 안내문구가
+   나오는지, 다른사람 글에 수정/삭제 버튼이 안보이는지 확인
