@@ -25,7 +25,7 @@ const Header = () => {
     <header className={styles.header}>
         <div className={styles.inner}>
             <Link to="/" className={styles.logo}>
-              <img src="/img/logo1.jpg" alt="logo" className={styles.logoImg} />
+              <img src="/img/logo9.jpg" alt="logo" className={styles.logoImg} />
             </Link>
             <nav className={styles.nav}>
                 <NavLink to='/' end className={ ({ isActive }) => (
