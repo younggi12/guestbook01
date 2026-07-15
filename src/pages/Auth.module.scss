@@ -4,57 +4,104 @@
   justify-content: center;
   min-height: 100vh;
   padding: 40px 20px;
-  background: #f3f3f3;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 40%, #141414 0%, #000 65%);
+
+  /* 은은한 레이싱 대각선 스트라이프 */
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(225, 6, 0, 0.07) 0px,
+      rgba(225, 6, 0, 0.07) 2px,
+      transparent 2px,
+      transparent 40px
+    );
+    z-index: 0;
+  }
+
+  /* 카드 뒤 레드 글로우 */
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 700px;
+    height: 700px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(225, 6, 0, 0.3) 0%, transparent 70%);
+    z-index: 0;
+  }
 }
 
 .card {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 460px;
   padding: 48px 40px;
-  background: #fff;
+  background: rgba(17, 17, 17, 0.92);
+  border: 1px solid #333;
   border-radius: 4px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 0 50px rgba(225, 6, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(6px);
   display: flex;
   flex-direction: column;
   gap: 16px;
-  position: relative; 
 
   h1 {
     margin: 0;
     font-size: 20px;
     font-weight: 700;
+    letter-spacing: 1px;
     text-align: center;
-    color: #111;
+    color: #fff;
   }
 
-  button[type='submit'] {
+  button[type="submit"] {
     margin-top: 8px;
     padding: 16px;
     border: none;
     border-radius: 4px;
-    background: #ebebeb;
-    color: #9a9a9a;
+    background: #e10600;
+    color: #fff;
     font-size: 15px;
     font-weight: 600;
+    letter-spacing: .5px;
     cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
 
     &:hover {
-      background: #111;
-      color: #fff;
+      background: #ff2020;
+      box-shadow: 0 0 20px rgba(225, 6, 0, .5);
+    }
+
+    &:disabled {
+      background: #333;
+      color: #777;
+      cursor: not-allowed;
+      box-shadow: none;
     }
   }
 
-   p:last-of-type {
+  p:last-of-type {
     margin: 20px 0 0;
     padding-top: 20px;
-    border-top: 1px solid #ececec;
+    border-top: 1px solid #292929;
     text-align: center;
     font-size: 14px;
-    color: #666;
+    color: #888;
 
     a {
-      color: #111;
+      color: #e10600;
       font-weight: 700;
       text-decoration: none;
 
@@ -76,15 +123,17 @@
     font-size: 18px;
     font-weight: 700;
     text-align: center;
-    color: #111;
+    color: #fff;
   }
 }
 
 .logo {
-  height: 32px;
+  height: 56px;
   width: auto;
   margin-bottom: 16px;
   object-fit: contain;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 10px rgba(225, 6, 0, .35));
 }
 
 .field {
@@ -93,42 +142,44 @@
   gap: 6px;
   font-size: 13px;
   font-weight: 600;
-  color: #888;
+  color: #999;
 
   input {
     padding: 14px 16px 14px 40px;
-    border: 1px solid #ddd;
+    border: 1px solid #333;
     border-radius: 4px;
     font-size: 15px;
     font-weight: 400;
-    color: #222;
+    color: #eee;
+    background-color: #0a0a0a;
     background-repeat: no-repeat;
     background-position: 14px center;
     background-size: 16px 16px;
-    transition: border-color 0.15s ease;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
     &::placeholder {
-      color: #bbb;
+      color: #555;
     }
 
     &:focus {
       outline: none;
-      border-color: #111;
+      border-color: #e10600;
+      box-shadow: 0 0 12px rgba(225, 6, 0, .3);
     }
 
     // 닉네임 (person 아이콘)
     &[type='text'] {
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'><circle cx='12' cy='8' r='4'/><path d='M4 21c0-4 4-6 8-6s8 2 8 6'/></svg>");
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'><circle cx='12' cy='8' r='4'/><path d='M4 21c0-4 4-6 8-6s8 2 8 6'/></svg>");
     }
 
     // 이메일
     &[type='email'] {
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'><rect x='2' y='4' width='20' height='16' rx='2'/><path d='M2 6l10 7 10-7'/></svg>");
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'><rect x='2' y='4' width='20' height='16' rx='2'/><path d='M2 6l10 7 10-7'/></svg>");
     }
 
     // 패스워드
     &[type='password'] {
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'><rect x='5' y='11' width='14' height='9' rx='2'/><path d='M8 11V7a4 4 0 0 1 8 0v4'/></svg>");
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'><rect x='5' y='11' width='14' height='9' rx='2'/><path d='M8 11V7a4 4 0 0 1 8 0v4'/></svg>");
     }
   }
 }

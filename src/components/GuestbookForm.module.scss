@@ -1,8 +1,14 @@
+// F1 사이트가 실제로 쓰는 압축(condensed) 이탤릭 폰트 계열
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800;1,900&family=Barlow:wght@400;500;600&display=swap');
+
 $f1-red: #e10600;
 $carbon: #15151e;
 $carbon-light: #1f1f2b;
 $silver: #949498;
 $white: #f8f8f8;
+
+$font-display: 'Barlow Condensed', sans-serif;
+$font-body: 'Barlow', sans-serif;
 
 .wrap {
   margin-bottom: 10px;
@@ -13,21 +19,49 @@ $white: #f8f8f8;
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 10px;
   padding: 32px 28px;
+  font-family: $font-body;
+  position: relative;
+  overflow: hidden;
+
+  // 좌측 상단에 아주 옅은 카본 텍스처 느낌의 대각선 스트라이프
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      115deg,
+      rgba(255,255,255,0.015) 0px,
+      rgba(255,255,255,0.015) 1px,
+      transparent 1px,
+      transparent 6px
+    );
+    pointer-events: none;
+  }
 }
 
 .heading {
   color: $white;
-  font-size: 20px;
+  font-family: $font-display;
+  font-size: 24px;
   font-weight: 800;
   font-style: italic;
+  letter-spacing: 0.3px;
   margin: 0 0 16px;
   padding-bottom: 12px;
-  border-bottom: 2px solid $f1-red;
+  border-bottom: 3px solid $f1-red;
+  position: relative;
+  z-index: 1;
 }
 
 .emojiLabel {
   color: $silver;
   font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   margin: 0 0 8px;
 }
 
@@ -58,7 +92,9 @@ $white: #f8f8f8;
   display: block;
   color: $silver;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   margin-bottom: 14px;
 
   input,
@@ -68,16 +104,22 @@ $white: #f8f8f8;
     margin-top: 6px;
     background: $carbon;
     border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 6px;
+    border-left: 3px solid transparent;
+    border-radius: 4px;
     padding: 10px 12px;
     color: $white;
     font-size: 14px;
-    font-family: inherit;
+    font-family: $font-body;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: normal;
     box-sizing: border-box;
+    transition: border-color 0.15s ease;
 
     &:focus {
       outline: none;
       border-color: $f1-red;
+      border-left-color: $f1-red;
     }
 
     &::placeholder {
@@ -91,26 +133,140 @@ $white: #f8f8f8;
   }
 }
 
+// 글자수 카운터
+.charCount {
+  display: block;
+  text-align: right;
+  color: $silver;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+  margin-top: 4px;
+}
+
+// 체커 플래그 패턴 구분선 - 섹션 사이에 얇은 포인트로만 사용
+.checkerDivider {
+  height: 6px;
+  margin: 18px 0;
+  background-image:
+    linear-gradient(45deg, $carbon 25%, transparent 25%, transparent 75%, $carbon 75%),
+    linear-gradient(45deg, $carbon 25%, transparent 25%, transparent 75%, $carbon 75%);
+  background-size: 6px 6px;
+  background-position: 0 0, 3px 3px;
+  background-color: rgba(255,255,255,0.25);
+  opacity: 0.5;
+  border-radius: 2px;
+}
+
 .preview {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 .previewLabel {
   color: $silver;
   font-size: 12px;
-  margin: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 8px;
+}
+
+.previewContent {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 .previewAvatar {
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
+  flex-shrink: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 10%;
   overflow: hidden;
-  border: 2px solid $f1-red;
-  animation: previewPulse 1.6s ease-in-out infinite;
+}
+
+// 프로필 카드 - 오른쪽 위 모서리를 사선으로 잘라서 F1 특유의 속도감 표현
+.profileCard {
+  --team-color: #{$f1-red};
+  flex: 1;
+  background: $carbon;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-left: 4px solid var(--team-color);
+  border-radius: 4px;
+  padding: 12px 16px;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 100%, 0 100%);
+}
+
+.profileTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.profileName {
+  color: $white;
+  font-family: $font-display;
+  font-size: 18px;
+  font-weight: 800;
+  font-style: italic;
+  margin: 0;
+}
+
+// 팀 컬러 뱃지 - 실제 팀 컬러를 배경으로 사용
+.teamBadge {
+  flex-shrink: 0;
+  background: var(--team-color);
+  color: $white;
+  font-family: $font-display;
+  font-size: 14px;
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 3px;
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+
+.profileList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+
+    span {
+      flex-shrink: 0;
+      color: $silver;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      width: 60px;
+    }
+
+    strong {
+      color: $white;
+      font-size: 15px;
+      font-weight: 600;
+      // 숫자(나이 등)는 타이밍 스크린처럼 고정폭 숫자로
+      font-variant-numeric: tabular-nums;
+    }
+  }
+}
+
+.careerItem strong {
+  line-height: 1.4;
+  font-weight: 500;
 }
 
 @keyframes previewPulse {
@@ -137,77 +293,153 @@ $white: #f8f8f8;
 
   strong {
     color: $white;
-    font-size: 14px;
+    font-family: $font-display;
+    font-size: 16px;
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
   }
 }
 
 .characterHint {
   color: $silver;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 400;
 }
 
 .characterGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
-  gap: 10px;
-  margin-top: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
 }
 
+// 팀 컬러는 테두리로만 표시, 배경은 카본톤 고정 (사진 톤 통일)
 .characterBtn {
+  --team-color: #{$f1-red};
   position: relative;
   padding: 0;
-  border: 2px solid transparent;
-  border-radius: 8px;
+  border: 2px solid var(--team-color);
+  border-radius: 6px;
   overflow: hidden;
-  aspect-ratio: 1;
+  aspect-ratio: 4 / 4;
   background: $carbon;
   cursor: pointer;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.5);
   }
+}
+
+// 사진 원본 그대로 표시 (필터/오버레이 없음)
+.characterPhoto {
+  position: absolute;
+  right: -6%;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+}
+
+.characterBtn:hover .characterPhoto img {
+  transform: scale(1.06);
+}
+
+// 왼쪽 위 등번호만 표시하는 텍스트 블록
+.characterInfo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: 10px 10px 0;
+  text-align: left;
+  pointer-events: none;
+}
+
+.characterNumber {
+  display: block;
+  color: $white;
+  font-family: $font-display;
+  font-size: 28px;
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8), 0 0 4px rgba(0,0,0,0.6);
 }
 
 // 선택된 선수 사진 위에 표시되는 체크마크
 .checkMark {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 18px;
-  height: 18px;
-  background: $f1-red;
+  top: 6px;
+  right: 6px;
+  z-index: 3;
+  width: 20px;
+  height: 20px;
+  background: $carbon;
   color: $white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 900;
   line-height: 1;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.9);
 }
 
+// 선택 상태 - 흰 링 + 팀 컬러 글로우
 .selected {
-  border-color: $f1-red;
-  box-shadow: 0 0 0 2px rgba(225,6,0,0.35);
+  box-shadow:
+    0 0 0 3px $white,
+    0 0 20px var(--team-color),
+    0 4px 14px rgba(0,0,0,0.4);
 }
 
+// 제출 버튼 - hover 시 붉은 사선이 차오르는 스윕 효과 (F1 사이트 시그니처)
 .submitBtn {
+  position: relative;
   width: 100%;
-  background: $f1-red;
-  color: $white;
-  border: none;
+  background: $carbon;
+  border: 2px solid $f1-red;
   border-radius: 6px;
-  padding: 12px;
-  font-size: 15px;
+  padding: 13px;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: $f1-red;
+    clip-path: polygon(0 100%, 0 100%, 0 100%, 0 100%);
+    transition: clip-path 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: -1;
+  }
+
+  &:hover::before {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+.submitBtnText {
+  display: block;
+  color: $white;
+  font-family: $font-display;
+  font-size: 16px;
   font-weight: 800;
   font-style: italic;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: background 0.15s ease;
-
-  &:hover {
-    background: #c00500;
-  }
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }

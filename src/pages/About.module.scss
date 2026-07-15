@@ -1,0 +1,1216 @@
+.aboutPage{
+
+    width:100%;
+    min-height:100vh;
+    background:#000;
+    color:#fff;
+
+}
+
+
+
+/* =========================
+   VIDEO INTRO
+========================= */
+
+
+.introWrap{
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:100%;
+    height:100vh;
+
+    background:#000;
+
+    // z-index:999;
+
+    overflow:hidden;
+
+    transition:.8s;
+
+}
+
+
+
+.slideUp{
+
+    transform:translateY(-100%);
+
+}
+
+
+
+
+.introVideo{
+
+    width:100%;
+    height:100vh;
+
+    object-fit:cover;
+
+}
+
+
+
+
+
+.skipBtn{
+
+    position:absolute;
+
+    right:50px;
+    bottom:50px;
+
+
+    padding:15px 35px;
+
+
+    background:rgba(0,0,0,.5);
+
+
+    border:2px solid #e10600;
+
+    color:#fff;
+
+
+    cursor:pointer;
+
+
+    font-size:16px;
+
+
+    transition:.3s;
+
+
+
+    &:hover{
+
+        background:#e10600;
+
+    }
+
+}
+
+
+
+
+
+/* =========================
+   CONTENT
+========================= */
+
+
+.aboutContent{
+
+    animation:show .8s ease;
+
+}
+
+
+
+
+@keyframes show{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(70px);
+
+    }
+
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   HERO
+========================= */
+
+
+.aboutHero{
+
+
+    height:500px;
+
+
+    display:flex;
+
+    flex-direction:column;
+
+
+    justify-content:center;
+
+    align-items:center;
+
+
+    text-align:center;
+
+
+
+    h1{
+
+        font-size:70px;
+
+        color:#e10600;
+
+        letter-spacing:3px;
+
+    }
+
+
+
+
+    p{
+
+        font-size:22px;
+
+        color:#aaa;
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   FIA INFO
+========================= */
+
+
+.aboutInfo{
+
+
+    width:85%;
+
+    margin:0 auto 100px;
+
+
+    text-align:center;
+
+
+
+    h2{
+
+        font-size:40px;
+
+    }
+
+
+
+
+    p{
+
+        color:#aaa;
+
+        line-height:2;
+
+        font-size:18px;
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   STAT
+========================= */
+
+
+.aboutStats{
+
+
+    width:85%;
+
+    margin:0 auto 120px;
+
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+
+    gap:30px;
+
+
+}
+
+
+
+
+.statCard{
+
+
+    background:#111;
+
+
+    border:1px solid #333;
+
+
+    padding:45px;
+
+
+    text-align:center;
+
+
+    transition:.3s;
+
+
+
+    &:hover{
+
+        transform:translateY(-10px);
+
+        border-color:#e10600;
+
+        box-shadow:
+        0 0 25px rgba(225,6,0,.3);
+
+    }
+
+
+
+
+    h3{
+
+        font-size:55px;
+
+        color:#e10600;
+
+        margin:0;
+
+    }
+
+
+
+
+    span{
+
+        color:#ddd;
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+   F1 HISTORY
+========================= */
+
+
+.historySection{
+
+
+    width:85%;
+
+    margin:0 auto 150px;
+
+
+    text-align:center;
+
+
+
+
+    h2{
+
+        color:#e10600;
+
+        font-size:45px;
+
+        margin-bottom:70px;
+
+    }
+
+}
+
+
+
+
+
+.historyList{
+
+
+    display:flex;
+
+    justify-content:space-between;
+
+
+    position:relative;
+
+
+
+    &::before{
+
+
+        content:"";
+
+
+        position:absolute;
+
+
+        top:45px;
+
+
+        left:0;
+
+
+        width:100%;
+
+
+        height:2px;
+
+
+        background:#333;
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+.historyItem{
+
+
+    width:180px;
+
+
+    position:relative;
+
+
+    z-index:1;
+
+
+
+
+    &::before{
+
+
+        content:"";
+
+
+        display:block;
+
+
+        width:22px;
+
+
+        height:22px;
+
+
+        margin:35px auto;
+
+
+        background:#e10600;
+
+
+        border-radius:50%;
+
+
+        box-shadow:
+        0 0 20px rgba(225,6,0,.8);
+
+
+    }
+
+
+
+
+    h3{
+
+
+        font-size:35px;
+
+        color:#fff;
+
+
+    }
+
+
+
+
+
+    p{
+
+
+        color:#aaa;
+
+        font-size:14px;
+
+        line-height:1.6;
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   LEGENDARY DRIVER
+========================= */
+
+
+.driverSection{
+
+
+    width:85%;
+
+
+    margin:0 auto 150px;
+
+
+    text-align:center;
+
+
+
+    h2{
+
+
+        color:#e10600;
+
+
+        font-size:45px;
+
+
+        margin-bottom:60px;
+
+
+    }
+
+
+}
+
+
+
+
+
+.driverList{
+
+
+    display:grid;
+
+
+    grid-template-columns:repeat(3,1fr);
+
+
+    gap:40px;
+
+
+}
+
+
+
+
+
+
+
+.driverCard{
+
+
+    background:#111;
+
+
+    border:1px solid #333;
+
+
+    padding:30px;
+
+
+    transition:.4s;
+
+
+
+
+    &:hover{
+
+
+        transform:translateY(-15px);
+
+
+        border-color:#e10600;
+
+
+        box-shadow:
+        0 0 30px rgba(225,6,0,.4);
+
+
+    }
+
+
+
+
+
+    img{
+
+
+        width:100%;
+
+
+        height:400px;
+
+
+        object-fit:cover;
+
+
+    }
+
+
+
+
+
+    h3{
+
+
+        font-size:25px;
+
+
+        margin-top:25px;
+
+
+    }
+
+
+
+
+
+    p{
+
+
+        color:#e10600;
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+   TEAM LOGO SLIDER
+========================= */
+
+
+.teamSection{
+
+
+    padding:80px 0 150px;
+
+
+    text-align:center;
+
+
+
+
+    h2{
+
+
+        font-size:45px;
+
+
+        color:#e10600;
+
+
+        margin-bottom:60px;
+
+
+    }
+
+
+}
+
+
+
+
+
+.teamSlider{
+
+
+    width:100%;
+
+
+    overflow:hidden;
+
+
+}
+
+
+
+
+
+.teamTrack{
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:100px;
+
+
+    width:max-content;
+
+
+    animation:teamMove 35s linear infinite;
+
+
+}
+
+
+
+
+
+
+
+.teamSlider:hover .teamTrack{
+
+
+    animation-play-state:paused;
+
+
+}
+
+
+
+
+
+
+
+.teamLogo{
+
+
+    width:150px;
+
+
+    height:100px;
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    align-items:center;
+
+
+    flex-shrink:0;
+
+
+    transition:.4s;
+
+
+
+
+    img{
+
+
+        width:120px;
+
+
+        height:80px;
+
+
+        object-fit:contain;
+
+
+        border-radius:10%;
+
+
+    }
+
+
+
+
+
+    &:hover{
+
+
+        transform:scale(1.2);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+@keyframes teamMove{
+
+
+    from{
+
+
+        transform:translateX(0);
+
+
+    }
+
+
+
+    to{
+
+
+        transform:translateX(-50%);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+   BUTTON
+========================= */
+
+
+.goGuestbookBtn{
+
+
+    margin-top:70px;
+
+
+    padding:16px 45px;
+
+
+    background:#e10600;
+
+
+    border:none;
+
+
+    color:#111;
+
+
+    font-size:22px;
+
+    font-weight: bold;
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+
+
+
+    &:hover{
+
+
+        background:#ff2020;
+
+
+        transform:translateY(-5px);
+
+
+    }
+
+
+}
+
+
+
+
+/* =========================
+   SCROLL REVEAL (신규 추가)
+========================= */
+
+.reveal{
+
+    opacity:0;
+
+    transform:translateY(60px);
+
+    transition:opacity .8s ease, transform .8s ease;
+
+}
+
+
+.revealActive{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   FAMOUS CIRCUITS (신규 추가)
+========================= */
+
+.circuitSection{
+
+
+    width:85%;
+
+
+    margin:0 auto 150px;
+
+
+    text-align:center;
+
+
+
+    h2{
+
+
+        color:#e10600;
+
+
+        font-size:45px;
+
+
+        margin-bottom:60px;
+
+
+    }
+
+
+}
+
+
+
+
+
+.circuitList{
+
+
+    display:grid;
+
+
+    grid-template-columns:repeat(4,1fr);
+
+
+    gap:30px;
+
+
+}
+
+
+
+
+
+.circuitCard{
+
+
+    position:relative;
+
+
+    height:280px;
+
+
+    overflow:hidden;
+
+
+    border:1px solid #333;
+
+
+    cursor:pointer;
+
+
+    transition:.5s;
+
+
+
+
+    img{
+
+
+        width:100%;
+
+
+        height:100%;
+
+
+        object-fit:cover;
+
+
+        transition:.5s;
+
+
+    }
+
+
+
+
+    &::after{
+
+
+        content:"";
+
+
+        position:absolute;
+
+
+        left:0;
+
+
+        bottom:0;
+
+
+        width:100%;
+
+
+        height:100%;
+
+
+        background:linear-gradient(to top, rgba(0,0,0,.85), transparent 60%);
+
+
+    }
+
+
+
+
+    &:hover{
+
+
+        border-color:#e10600;
+
+
+        box-shadow:
+        0 0 25px rgba(225,6,0,.3);
+
+
+    }
+
+
+
+
+    &:hover img{
+
+
+        transform:scale(0.85);
+
+
+    }
+
+
+}
+
+
+
+
+
+.circuitInfo{
+
+
+    position:absolute;
+
+
+    left:0;
+
+
+    bottom:0;
+
+
+    width:100%;
+
+
+    padding:20px;
+
+
+    text-align:left;
+
+
+    z-index:1;
+
+
+
+
+    span{
+
+
+        color:#e10600;
+
+
+        font-size:13px;
+
+
+        letter-spacing:1px;
+
+
+    }
+
+
+
+
+    h3{
+
+
+        font-size:22px;
+
+
+        color:#fff;
+
+
+        margin-top:5px;
+
+
+    }
+
+
+
+
+    p{
+
+
+        color:#aaa;
+
+
+        font-size:13px;
+
+
+        margin-top:5px;
+
+
+    }
+
+
+}
+
+
+
+/* =========================
+   TOP SCROLL PROGRESS BAR (신규 추가)
+========================= */
+
+.scrollProgressBar{
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    height:4px;
+
+    width:0%;
+
+    background:#e10600;
+
+    box-shadow:
+    0 0 10px rgba(225,6,0,.8);
+
+    z-index:1000;
+
+    transition:width .1s linear;
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   HISTORY PROGRESS LINE (신규 추가)
+========================= */
+
+.historyProgressLine{
+
+    position:absolute;
+
+    top:45px;
+
+    left:0;
+
+    height:2px;
+
+    width:0%;
+
+    background:#e10600;
+
+    box-shadow:
+    0 0 12px rgba(225,6,0,.7);
+
+    z-index:0;
+
+    transition:width .1s linear;
+
+}
+

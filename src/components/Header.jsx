@@ -4,6 +4,7 @@ import { signOut } from 'firebase/auth'
 import { auth } from '../firebase'
 import useAuthStore from '../store/useAuthStore'
 import styles from './Header.module.scss'
+import About from '../pages/About'
 
 const Header = () => {
   const navigate = useNavigate()
@@ -30,11 +31,15 @@ const Header = () => {
             <nav className={styles.nav}>
                 <NavLink to='/' end className={ ({ isActive }) => (
                    isActive ? styles.active : styles.navLink
-                )}>홈으로</NavLink>
+                )}>Home</NavLink>
 
                 <NavLink to='/guest' className={ ({ isActive }) => (
                    isActive ? styles.active : styles.navLink
-                )}>방명록</NavLink>
+                )}>Guest</NavLink>
+
+                <NavLink to='/about' className={ ({ isActive }) => (
+                   isActive ? styles.active : styles.navLink
+                )}>About</NavLink>
             </nav>
             <div className={styles.auth}>
               {
@@ -42,13 +47,13 @@ const Header = () => {
                   // 로그인한 상태 : 닉네임 + 로그아웃 버튼 표시
                   <>
                     <span className={styles.userName}>{user.displayName || user.email}님</span>
-                    <button type='button' className={styles.logout} onClick={logoutFnc}>로그아웃</button>
+                    <button type='button' className={styles.logout} onClick={logoutFnc}>Logout</button>
                   </>
                 ) : (
                   // 비회원 상태 : 로그인 / 회원가입 링크 표시
                   <>
-                    <Link to="/login" className={styles.login}>로그인</Link>
-                    <Link to="/signup" className={styles.signup}>회원가입</Link>
+                    <Link to="/login" className={styles.login}>Login</Link>
+                    <Link to="/signup" className={styles.signup}>Register</Link>
                   </>
                 )
               }

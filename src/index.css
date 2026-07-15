@@ -5,3 +5,33 @@
   list-style: none;
   text-decoration: none;
 }
+
+/* =========================
+   전역 스크롤바 (F1 테마)
+========================= */
+
+/* Chrome, Edge, Safari 등 (WebKit 기반) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #15151e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3a3a45;
+  border-radius: 5px;
+  border: 2px solid #15151e;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e10600;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3a3a45 #15151e;
+}

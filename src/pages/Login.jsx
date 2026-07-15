@@ -45,7 +45,7 @@ const Login = () => {
     <section className={styles.auth}>
       <form onSubmit={subminFun} className={styles.card}>
            <div className={styles.brand}>
-              <img src="/img/icon3.png" alt="KIA" className={styles.logo} />
+              <img src="/img/logo9.png" alt="KIA" className={styles.logo} />
            </div>
 
            <h1>로그인</h1>

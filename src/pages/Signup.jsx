@@ -55,7 +55,7 @@ const Signup = () => {
     <section className={styles.auth}>
        <form onSubmit={subminFun} className={styles.card}>
                 <div className={styles.brand}>
-                  <img src="/img/icon3.png" alt="KIA" className={styles.logo} />
+                  <img src="/img/logo9.png" alt="KIA" className={styles.logo} />
                   <h1>회원가입</h1>
               </div>
 

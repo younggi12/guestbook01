@@ -113,11 +113,11 @@ $white: #f8f8f8;
 
 .postAvatar {
   flex-shrink: 0;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  border-radius: 5%;
   overflow: hidden;
-  border: 2px solid $f1-red;
+  // border: 0px solid $f1-red;
   background: $carbon;
 }
 
@@ -135,18 +135,18 @@ $white: #f8f8f8;
 
 .postNickname {
   color: $white;
-  font-size: 15px;
+  font-size: 18px;
 }
 
 .postDate {
   color: $silver;
-  font-size: 12px;
+  font-size: 15px;
   margin: 0;
 }
 
 .postMessage {
   color: #d8d8dc;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   margin: 0 0 10px;
   word-break: break-word;
@@ -276,5 +276,152 @@ $white: #f8f8f8;
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+
+
+// 페이지네이션 - 체커보드/레이싱 넘버 느낌
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 30px 0 10px;
+}
+
+.pageArrow {
+  background: $carbon-light;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: $silver;
+  font-size: 18px;
+  line-height: 1;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    border-color: $f1-red;
+    color: $f1-red;
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+}
+
+.pageNum {
+  background: $carbon-light;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: $silver;
+  font-family: 'Titillium Web', 'Pretendard', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    border-color: $f1-red;
+    color: $white;
+  }
+}
+
+// 현재 페이지 - 레드로 강조 (등번호 뱃지 느낌)
+.pageNumActive {
+  background: $f1-red;
+  border-color: $f1-red;
+  color: $white;
+
+  &:hover {
+    background: $f1-red;
+    color: $white;
+  }
+}
+
+
+
+// =========================
+// 카드 보더 팀 컬러 (신규 추가)
+// - postCard에 인라인으로 넣어준 --post-team-color 변수를 사용
+// - 기존 border-left: 4px solid $f1-red 를 덮어씀
+// =========================
+.postCard {
+  border-left: 4px solid var(--post-team-color, #{$f1-red});
+}
+
+
+
+
+
+
+
+
+// =========================
+// 새 글 슬라이드인 애니메이션 (신규 추가)
+// =========================
+@keyframes postSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.postCard {
+  animation: postSlideIn 0.4s ease;
+}
+
+
+
+
+
+
+
+
+// =========================
+// 팀별 필터 탭 (신규 추가)
+// =========================
+.filterTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.filterTab {
+  background: $carbon-light;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: $silver;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    border-color: $f1-red;
+    color: $white;
+  }
+}
+
+.filterTabActive {
+  background: $f1-red;
+  border-color: $f1-red;
+  color: $white;
+
+  &:hover {
+    background: $f1-red;
+    color: $white;
   }
 }

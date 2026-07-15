@@ -15,6 +15,9 @@ const GuestbookForm = ( {onAddPost, defaultNickname = ''} ) => {
     // 처음 화면을 봤을때 "뭘 고르는건지" 헷갈리지 않도록 기본 선수를 미리 선택해둠
     const [character, setCharacter] = useState(DEFAULT_CHARACTER)
 
+    // 선택된 character id에 해당하는 선수의 전체 정보(이름, 나이, 경력, 팀)를 찾음
+    const selectedCharacter = CHARACTERS.find( (item) => item.id === character )
+
     const addE = (emoji) => {
         setMessage( (msg) => msg + emoji )
     }
@@ -36,7 +39,7 @@ const GuestbookForm = ( {onAddPost, defaultNickname = ''} ) => {
   return (
     <div className={styles.wrap}>
       <form className={styles.form} onSubmit={submitFnc}>
-        <h2 className={styles.heading}>응원하는 선수를 골라보세요!</h2>
+        <h2 className={styles.heading}>응원하는 선수를 선택하세요!</h2>
         <div>
             <p className={styles.emojiLabel}>당신의 표정</p>
 
@@ -62,14 +65,42 @@ const GuestbookForm = ( {onAddPost, defaultNickname = ''} ) => {
                 <textarea type="text" value={message} onChange={ (e) => {
                 setMessage(e.target.value)
                 }} placeholder='아무거나' maxLength="500" required />
+                <span className={styles.charCount}>{message.length}/500</span>
             </label>
-            {/* 캐릭터 미리보기 */}
+
+            {/* 체커 플래그 구분선 - 폼 상단과 미리보기 사이 포인트 */}
+            <div className={styles.checkerDivider}></div>
+
+            {/* 캐릭터 미리보기 + 선수 프로필(이름/나이/경력/팀) */}
             {
-              character && (
+              selectedCharacter && (
                 <div className={styles.preview}>
                   <p className={styles.previewLabel}>선택한 선수 :</p>
-                  <div className={styles.previewAvatar}>
-                    <CharacterAvatar  character={character}/>
+                  <div className={styles.previewContent}>
+                    <div className={styles.previewAvatar}>
+                      <CharacterAvatar  character={character}/>
+                    </div>
+                    <div
+                      className={styles.profileCard}
+                      style={{ '--team-color': selectedCharacter.teamColor }}
+                    >
+                      <div className={styles.profileTop}>
+                        <p className={styles.profileName}>{selectedCharacter.name}</p>
+                        <span className={styles.teamBadge}>
+                          {selectedCharacter.team}
+                        </span>
+                      </div>
+                      <ul className={styles.profileList}>
+                        <li>
+                          <span>나이</span>
+                          <strong>{selectedCharacter.age}</strong>
+                        </li>
+                        <li className={styles.careerItem}>
+                          <span>수상 경력</span>
+                          <strong>{selectedCharacter.career}</strong>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               )
@@ -83,18 +114,30 @@ const GuestbookForm = ( {onAddPost, defaultNickname = ''} ) => {
                 </div>
                 <div className={styles.characterGrid}>
                 {
-                  CHARACTERS.map( (item) => (
-                    <button key={item.id} type='button'
-                    className={ character === item.id ? `${styles.characterBtn} ${styles.selected}` : styles.characterBtn}
-                    onClick={ () => setCharacter(item.id) }>
-                        <CharacterAvatar  character={item.id} />
-                        {
-                          character === item.id && (
-                            <span className={styles.checkMark}>✓</span>
-                          )
-                        }
-                    </button>
-                  ))
+                  CHARACTERS.map( (item) => {
+                    return (
+                      <button key={item.id} type='button'
+                      className={ character === item.id ? `${styles.characterBtn} ${styles.selected}` : styles.characterBtn}
+                      style={{ '--team-color': item.teamColor }}
+                      onClick={ () => setCharacter(item.id) }>
+
+                          <div className={styles.characterPhoto}>
+                            <CharacterAvatar  character={item.id} />
+                          </div>
+
+                          {/* 등번호만 표시 */}
+                          <div className={styles.characterInfo}>
+                            <span className={styles.characterNumber}>{item.number}</span>
+                          </div>
+
+                          {
+                            character === item.id && (
+                              <span className={styles.checkMark}>✓</span>
+                            )
+                          }
+                      </button>
+                    )
+                  })
                 }
                 </div>
             </div>
@@ -102,7 +145,9 @@ const GuestbookForm = ( {onAddPost, defaultNickname = ''} ) => {
         </div>
 
         <div>
-            <button type='submit' className={styles.submitBtn}>응원 남기기</button>
+            <button type='submit' className={styles.submitBtn}>
+              <span className={styles.submitBtnText}>응원 남기기</span>
+            </button>
         </div>
       </form>
     </div>

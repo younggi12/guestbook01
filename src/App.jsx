@@ -8,6 +8,7 @@ import Guestbook from './pages/Guestbook'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Header from './components/Header'
+import About from './pages/About'
 
 const App = () => {
   // zustand 스토어에서 로그인상태를 업데이트할 함수들을 꺼내옴
@@ -37,6 +38,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path='/' element= { <Home /> } /> 
+        <Route path='/about/' element= { <About /> } /> 
         <Route path='/login' element= { <Login /> } /> 
         <Route path='/signup' element= { <Signup /> } /> 
         <Route path='/guest' element= { <Guestbook />} />
